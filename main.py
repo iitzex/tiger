@@ -52,12 +52,10 @@ def flight(dest):
         df = df.append(t_df)
 
     # print(df)
-
-    df.to_csv(dest)
+    df.to_csv(dest+'.csv')
 
 if __name__ == '__main__':
-    dest = ['OKA', 'OKJ', 'CJU']
-    dest = ['CJU']
+    dest = ['KIX', 'FUK', 'HKD', 'NGO', 'OKA', 'OKJ', 'CJU', 'PUS', 'TAE']
 
     for _ in dest:
         flight(_)
