@@ -1,6 +1,5 @@
 import requests
 import json
-from json import JSONDecodeError
 import datetime
 import time
 import pandas as pd
@@ -9,7 +8,7 @@ def parse(addr):
     while True:
         r = requests.get(addr)
         try:
-            j = json.loads(r.text)
+            j = r.json()
 
             depfares = j['journeyDateMarkets'][0]['lowFares']['lowestFares']
             dep_df = pd.DataFrame(depfares, columns=['date', 'price'])
@@ -28,12 +27,12 @@ def parse(addr):
 
         except OSError as e:
             print(e)
-        except JSONDecodeError as e:
+        except ValueError as e:
             continue
         break
 
 
-def interval(start, dest):
+def interval(dest, start):
     startfmt = start.strftime("%Y-%m-%d")
     end = start# + datetime.timedelta(days=10)
     endfmt = end.strftime("%Y-%m-%d")
@@ -56,7 +55,9 @@ def flight(dest):
 
 if __name__ == '__main__':
     dest = ['KIX', 'FUK', 'HKD', 'NGO', 'OKA', 'OKJ', 'CJU', 'PUS', 'TAE']
+    dest = ['NGO']
 
     for _ in dest:
+        print(_ + ' processing...')
         flight(_)
     
