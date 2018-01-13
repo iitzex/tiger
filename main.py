@@ -32,7 +32,7 @@ def parse(addr):
         break
 
 
-def interval(dest, start):
+def interval(start, dest):
     startfmt = start.strftime("%Y-%m-%d")
     end = start# + datetime.timedelta(days=10)
     endfmt = end.strftime("%Y-%m-%d")
@@ -43,9 +43,9 @@ def interval(dest, start):
     return parse(addr)
 
 
-def flight(dest):
+def flight(dest, weeks):
     df = pd.DataFrame()
-    for i in range(0, 10):
+    for i in range(0, weeks):
         start = datetime.datetime(2018, 1, 1, 0, 0, 0, 0) + datetime.timedelta(i*9)
         t_df = interval(start, dest)
         df = df.append(t_df)
@@ -55,9 +55,9 @@ def flight(dest):
 
 if __name__ == '__main__':
     dest = ['KIX', 'FUK', 'HKD', 'NGO', 'OKA', 'OKJ', 'CJU', 'PUS', 'TAE']
-    dest = ['NGO']
+    dest = ['OKA', 'OKJ']
 
     for _ in dest:
         print(_ + ' processing...')
-        flight(_)
+        flight(_, 20)
     
